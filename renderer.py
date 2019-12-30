@@ -2,20 +2,25 @@ from tkinter import *
 from tkinter.ttk import *
 
 class Renderer(Frame):
-    window_manager = Tk()
-    window_manager.title("four function calculator")
-    
-    def __init__(self):
+    def __init__(self, name, width, height, resizable):
+        self.window_manager = Tk()
+        self.window_manager.title(name)
+        self.window_manager.geometry(f"{width}x{height}")
+        if not resizable:
+            self.window_manager.resizable(0, 0)
+
         super().__init__(self.window_manager)
         self.pack()
-        self.create_widgets()
+        self.draw_elements()
+        self.update_window("hello world")
 
     def start(self):
         self.mainloop()
 
-    def create_widgets(self):
-        self.hi_there = Button(self, text = "Hello World", command = self.say_hi)
-        self.hi_there.pack(side="top")
+    def draw_elements(self):
+        self.windowvar = StringVar()
+        self.window = Label(textvariable = self.windowvar)
+        self.window.pack(side="top")
 
-    def say_hi(self):
-        print("hi there, everyone!")
+    def update_window(self, message):
+        self.windowvar.set(message)
